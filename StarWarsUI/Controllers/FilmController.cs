@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using StarWarsUI.Models;
-using System.Text;
 
 namespace StarWarsUI.Controllers
 {
