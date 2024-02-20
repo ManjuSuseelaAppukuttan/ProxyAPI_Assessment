@@ -1,13 +1,11 @@
 ﻿using APICommons;
 using APIInterfaces;
 using APIModels.Models;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace StarWarsAPIs.Controllers
-{   
+{
     [ApiController]
     [Route("starwarsapi/planets")]
     [Tags("Planets")]
@@ -38,7 +36,7 @@ namespace StarWarsAPIs.Controllers
         /// <response code="204">No contect</response>
         /// <response code="400">Bad request</response>
         /// <response code="500">Internal server error</response>
-        [HttpGet]
+        [HttpGet("GetAll")]
         [ProducesResponseType(typeof(List<PlanetsViewResponseModel>), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
@@ -46,7 +44,7 @@ namespace StarWarsAPIs.Controllers
         {
             try
             {
-                (HttpStatusCode, List<PlanetsModel>?) result = await _starWarsAPIService.GetAllByName(APIConstants.PlanetsApiPath);
+                (HttpStatusCode, List<PlanetsModel>?) result = await _starWarsAPIService.GetAll(APIConstants.PlanetsApiPath);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
                     List<PlanetsViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();//result.Item2.Select(item => _mapper.Map<PlanetsViewResponseModel>(item)).ToList();
@@ -80,8 +78,7 @@ namespace StarWarsAPIs.Controllers
         /// <response code="200">Success</response>
         /// <response code="404">Not found</response>
         /// <response code="500">Internal server error</response>
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("GetById")]
         [ProducesResponseType(typeof(PlanetsViewResponseModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
@@ -89,7 +86,7 @@ namespace StarWarsAPIs.Controllers
         {
             try
             {
-                (HttpStatusCode, PlanetsModel?) result = await _starWarsAPIService.GetByNameAndId(APIConstants.PlanetsApiPath, id);
+                (HttpStatusCode, PlanetsModel?) result = await _starWarsAPIService.GetById(APIConstants.PlanetsApiPath, id);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
                     PlanetsViewResponseModel viewModel = result.Item2.Map();//_mapper.Map<PlanetsViewResponseModel>(result.Item2);
@@ -119,7 +116,7 @@ namespace StarWarsAPIs.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        [HttpGet("GetAllFilmsByIds")]
+        [HttpGet("GetByIds")]
         [ProducesResponseType(typeof(PlanetsViewResponseModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
@@ -127,7 +124,7 @@ namespace StarWarsAPIs.Controllers
         {
             try
             {
-                var response = await _starWarsAPIService.GetAllByIds(APIConstants.PlanetsApiPath, ids);
+                var response = await _starWarsAPIService.GetByIds(APIConstants.PlanetsApiPath, ids);
 
                 return Ok(response);
             }

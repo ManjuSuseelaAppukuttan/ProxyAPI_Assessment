@@ -9,6 +9,6 @@
         public string Director { get; set; } = default!;
         public string Producer { get; set; } = default!;
         public DateTime? Rlease_date { get; set; } = default!;
-        public int[] Starships { get; set; }
+        public int[]? Planets { get; set; }
     }
 }

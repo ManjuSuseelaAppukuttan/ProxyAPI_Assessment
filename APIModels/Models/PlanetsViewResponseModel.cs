@@ -12,6 +12,6 @@
         public string SurfaceWater { get; set; } = default!;
         public string Population { get; set; } = default!;
         public List<string>? Residents { get; set; }
-        public List<string> Films { get; set; }
+        public List<string>? Films { get; set; }
     }
 }

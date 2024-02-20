@@ -21,9 +21,9 @@ namespace APICommons
                 Producer = film.Producer,
                 //Rlease_date = DateTime.TryParseExact(film.Rlease_date, "dd/MM/yyyy HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime dateTime) ? dateTime : null,
 
-                Starships = film.Starships.Select(url =>
+                Planets = film.Planets?.Select(url =>
                 {
-                    string? modifiedUrl = url?.Replace(APIConstants.StarShiplUrl, "").TrimEnd('/');
+                    string? modifiedUrl = url?.Replace(APIConstants.PlanetsUrl, "").TrimEnd('/');
                     return int.TryParse(modifiedUrl, out int itemId) ? itemId : 0;
                 }).ToArray()
             };
@@ -42,7 +42,7 @@ namespace APICommons
                 Climate = planets.Climate,
                 Diameter = planets.Diameter,
                 Gravity = planets.Gravity,
-                Films = planets.Films.Select(url =>
+                Films = planets.Films?.Select(url =>
                 {
                     string modifiedUrl = url?.Replace(APIConstants.FilmApiPath, "").TrimEnd('/');
                     return modifiedUrl;

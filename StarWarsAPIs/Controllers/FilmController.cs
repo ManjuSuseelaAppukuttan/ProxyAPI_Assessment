@@ -1,7 +1,6 @@
 ﻿using APICommons;
 using APIInterfaces;
 using APIModels.Models;
-using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -37,7 +36,7 @@ namespace StarWarsAPIs.Controllers
         /// <response code="204">No contect</response>
         /// <response code="400">Bad request</response>
         /// <response code="500">Internal server error</response>
-        [HttpGet("GetAllFilms")]
+        [HttpGet("GetAll")]
         [ProducesResponseType(typeof(List<FilmViewResponseModel>), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
@@ -45,7 +44,7 @@ namespace StarWarsAPIs.Controllers
         {
             try
             {
-                (HttpStatusCode, List<FilmModel>?) result = await _starWarsAPIService.GetAllByName(APIConstants.FilmApiPath);
+                (HttpStatusCode, List<FilmModel>?) result = await _starWarsAPIService.GetAll(APIConstants.FilmApiPath);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
                     List<FilmViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();//result.Item2.Select(item => _mapper.Map<FilmViewResponseModel>(item)).ToList();
@@ -73,13 +72,13 @@ namespace StarWarsAPIs.Controllers
         /// <summary>
         /// This method is used to retreive the star wars films details based on the given id
         /// </summary>
-        /// <remarks>Api for particular film details</remarks>
+        /// <remarks></remarks>
         /// <param name="id"></param>
         /// <returns></returns>
         /// <response code="200">Success</response>
         /// <response code="404">Not found</response>
         /// <response code="500">Internal server error</response>
-        [HttpGet("GetFilmById")]       
+        [HttpGet("GetById")]       
         [ProducesResponseType(typeof(FilmViewResponseModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
@@ -87,10 +86,10 @@ namespace StarWarsAPIs.Controllers
         {
             try
             {
-                (HttpStatusCode, FilmModel?) result = await _starWarsAPIService.GetByNameAndId(APIConstants.FilmApiPath, id);
+                (HttpStatusCode, FilmModel?) result = await _starWarsAPIService.GetById(APIConstants.FilmApiPath, id);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
-                    FilmViewResponseModel viewModel = result.Item2.Map(); //_mapper.Map<FilmViewResponseModel>(result.Item2);
+                    FilmViewResponseModel viewModel = result.Item2.Map(); 
                     return Ok(viewModel);
                 }
                 return StatusCode((int)result.Item1);
@@ -117,7 +116,7 @@ namespace StarWarsAPIs.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        [HttpPost("GetAllFilmsByIds")]
+        [HttpPost("GetByIds")]
         [ProducesResponseType(typeof(PlanetsViewResponseModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
@@ -125,7 +124,7 @@ namespace StarWarsAPIs.Controllers
         {
             try
             {
-                var response = await _starWarsAPIService.GetAllByIds(APIConstants.FilmApiPath, ids);
+                var response = await _starWarsAPIService.GetByIds(APIConstants.FilmApiPath, ids);
 
                 return Ok(response);
             }
