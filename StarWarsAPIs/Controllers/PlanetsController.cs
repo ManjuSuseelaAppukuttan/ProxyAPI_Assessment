@@ -82,7 +82,7 @@ namespace StarWarsAPIs.Controllers
         [ProducesResponseType(typeof(PlanetsViewResponseModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetFilmById(int id)
+        public async Task<IActionResult> GetPlanetById(int id)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace StarWarsAPIs.Controllers
         [ProducesResponseType(typeof(PlanetsViewResponseModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetAllFilmsByIds([FromBody] int[] ids)
+        public async Task<IActionResult> GetAllPlanetsByIds([FromBody] int[] ids)
         {
             try
             {
