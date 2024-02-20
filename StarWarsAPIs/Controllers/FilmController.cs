@@ -116,10 +116,7 @@ namespace StarWarsAPIs.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        [HttpPost("GetByIds")]
-        [ProducesResponseType(typeof(PlanetsViewResponseModel), 200)]
-        [ProducesResponseType(typeof(string), 404)]
-        [ProducesResponseType(typeof(string), 500)]
+        [HttpPost("GetByIds")]       
         public async Task<IActionResult> GetAllFilmsByIds([FromBody] int[] ids)
         {
             try

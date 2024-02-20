@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<StarWarsUI.Models.FilmViewModel>
-
 @{
-    ViewData["Title"] = "Index";
+    Layout = "_Layout"; ViewBag.Title = "All Films";
 }
 
-<h1>Index</h1>
+<h2>Films</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -37,35 +33,34 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Episode_id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Opening_crawl)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Director)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Producer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rlease_date)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Episode_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opening_crawl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Director)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Producer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rlease_date)
+                </td>
+                <td>
+                    @Html.ActionLink("Planet", "Planet", "Planets", new { item.Planets })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -16,10 +16,6 @@ namespace APIModels.Models
         public List<string>? Characters { get; set; }
         [JsonProperty("planets")]
         public List<string>? Planets { get; set; }
-        [JsonProperty("starships")]
-        public List<string>? Starships { get; set; }
-        public List<string>? Vehicles { get; set; }
-        public List<string>? Species { get; set; }
 
     }
 }

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<StarWarsUI.Models.PlanetViewModel>
+@{
+    Layout = "_Layout"; ViewBag.Title = "All Planets";
+}
+
+<h2>Planets</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RotationPeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrbitalPeriod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diameter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Climate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gravity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Terrain)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SurfaceWater)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Population)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RotationPeriod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrbitalPeriod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diameter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Climate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gravity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Terrain)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurfaceWater)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Population)
+            </td>
+            <td>
+                    @Html.ActionLink("Film", "Index", "Film", new { item.Films })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

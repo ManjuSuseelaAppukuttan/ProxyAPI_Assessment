@@ -32,5 +32,9 @@ namespace StarWarsUI.Models
         [Required]
         [DisplayName("Rlease Date")]
         public DateTime? Rlease_date { get; set; } = default!;
+
+        [Required]
+        [DisplayName("Planets")]
+        public List<string>? Planets { get; set; }
     }
 }

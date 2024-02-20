@@ -1,31 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using StarWarsUI.Models;
+using System.Text;
 
 namespace StarWarsUI.Controllers
 {
     public class FilmController : Controller
     {
-        Uri baseAddress = new Uri("http://localhost:5017/starwarsapi/films");
-        private readonly HttpClient _httpClient;
-
-        public FilmController()
-        {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = baseAddress;
-        }
-
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("http://localhost:5017/starwarsapi/films");
+
             List<FilmViewModel> filmList = new List<FilmViewModel>();
-            HttpResponseMessage response = _httpClient.GetAsync(_httpClient.BaseAddress + "/GetAll").Result;
-            if(response.IsSuccessStatusCode)
+            var response = await httpClient.GetAsync(httpClient.BaseAddress + "/GetAll").Result.Content.ReadAsStringAsync();
+            if (!string.IsNullOrEmpty(response))
             {
-                string data = response.Content.ReadAsStringAsync().Result;
-                filmList = JsonConvert.DeserializeObject<List<FilmViewModel>>(data);
+                filmList = JsonConvert.DeserializeObject<List<FilmViewModel>>(response);
             }
             return View(filmList);
-        }
+        }       
     }
 }
