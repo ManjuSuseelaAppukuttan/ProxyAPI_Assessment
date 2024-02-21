@@ -2,6 +2,7 @@
 using APIInterfaces;
 using APIModels.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Net;
 
 namespace StarWarsAPIs.Controllers
@@ -9,6 +10,7 @@ namespace StarWarsAPIs.Controllers
     [ApiController]
     [Route("starwarsapi/planets")]
     [Tags("Planets")]
+    [EnableRateLimiting("fixed")]
     public class PlanetsController : ControllerBase
     {
         #region Fields

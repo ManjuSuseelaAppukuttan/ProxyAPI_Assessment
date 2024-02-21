@@ -2,6 +2,7 @@
 using APIInterfaces;
 using APIModels.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Net;
 
 namespace StarWarsAPIs.Controllers
@@ -10,6 +11,7 @@ namespace StarWarsAPIs.Controllers
     [ApiController]
     [Route("starwarsapi/films")]
     [Tags("Flims")]
+    [EnableRateLimiting("fixed")]
     public class FilmController : ControllerBase
     {
         #region Fields

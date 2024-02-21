@@ -1,10 +1,6 @@
 using APIInterfaces;
 using APIServices;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.Configuration;
-using Serilog;
-using Serilog.Events;
-using StarWarsAPIs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,24 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "AllowOrigin",
-        builder =>
-        {
-            builder.WithOrigins("https://localhost:44351", "http://localhost:4200")
-                                .AllowAnyHeader()
-                                .AllowAnyMethod();
-        });
-});
-
-
-
 builder.Services.AddRateLimiter(rateLimiterOptions =>
 {
     rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
     {
-        options.PermitLimit = 2;
+        options.PermitLimit = 3;
         options.Window = TimeSpan.FromSeconds(10);
         options.QueueLimit = 0;
     });
@@ -40,13 +23,14 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
     rateLimiterOptions.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 });
 
+
 IConfiguration config = new ConfigurationBuilder()
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false).Build();
 
 builder.Services.AddSingleton<IConfiguration>(config);
 builder.Services.AddHttpClient();
 builder.Services.AddTransient(typeof(IStarWarsAPIService<>), typeof(StarWarsAPIService<>));
-//builder.Services.Configure<AppConfigurationSettings>(config.GetSection("AppConfiguration"));
+
 
 string baseuri = config.GetValue<string>("StarWarsBaseUrl:baseUri");
 builder.Services.AddHttpClient("starWarsClient", httpClient =>
