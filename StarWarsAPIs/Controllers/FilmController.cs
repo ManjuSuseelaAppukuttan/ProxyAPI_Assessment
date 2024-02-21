@@ -49,8 +49,7 @@ namespace StarWarsAPIs.Controllers
                 (HttpStatusCode, List<FilmModel>?) result = await _starWarsAPIService.GetAll(APIConstants.FilmApiPath);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
-                    List<FilmViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();//result.Item2.Select(item => _mapper.Map<FilmViewResponseModel>(item)).ToList();
-                    return Ok(viewModels);
+                    List<FilmViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();
                 }
                 return StatusCode((int)result.Item1);
             }

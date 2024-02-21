@@ -49,8 +49,7 @@ namespace StarWarsAPIs.Controllers
                 (HttpStatusCode, List<PlanetsModel>?) result = await _starWarsAPIService.GetAll(APIConstants.PlanetsApiPath);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
-                    List<PlanetsViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();//result.Item2.Select(item => _mapper.Map<PlanetsViewResponseModel>(item)).ToList();
-                    return Ok(viewModels);
+                    List<PlanetsViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();
                 }
                 return StatusCode((int)result.Item1);
             }
@@ -91,7 +90,7 @@ namespace StarWarsAPIs.Controllers
                 (HttpStatusCode, PlanetsModel?) result = await _starWarsAPIService.GetById(APIConstants.PlanetsApiPath, id);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
-                    PlanetsViewResponseModel viewModel = result.Item2.Map();//_mapper.Map<PlanetsViewResponseModel>(result.Item2);
+                    PlanetsViewResponseModel viewModel = result.Item2.Map();
                     return Ok(viewModel);
                 }
                 return StatusCode((int)result.Item1);
