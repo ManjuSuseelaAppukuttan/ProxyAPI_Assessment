@@ -10,5 +10,7 @@
         public string Producer { get; set; } = default!;
         public DateTime? Rlease_date { get; set; } = default!;
         public int[]? Planets { get; set; }
+
+        public int[] Starships { get; set; }
     }
 }

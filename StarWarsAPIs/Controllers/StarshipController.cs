@@ -8,20 +8,19 @@ using System.Net;
 namespace StarWarsAPIs.Controllers
 {
     [ApiController]
-    [Route("starwarsapi/planets")]
-    [Tags("Planets")]
+    [Route("starwarsapi/starships")]
+    [Tags("Starship")]
     [EnableRateLimiting("fixed")]
-    public class PlanetsController : ControllerBase
+    public class StarshipController : ControllerBase
     {
         #region Fields
-        private readonly ILogger<PlanetsController> _logger;
-        private readonly IStarWarsAPIService<PlanetsModel> _starWarsAPIService;
-      
+        private readonly ILogger<StarshipController> _logger;
+        private readonly IStarWarsAPIService<StarshipModel> _starWarsAPIService;
         #endregion
 
         #region Constructor
-        public PlanetsController(ILogger<PlanetsController> logger,
-                              IStarWarsAPIService<PlanetsModel> starWarsService)
+        public StarshipController(ILogger<StarshipController> logger,
+                              IStarWarsAPIService<StarshipModel> starWarsService)
         {
             _logger = logger;
             _starWarsAPIService = starWarsService;
@@ -31,25 +30,25 @@ namespace StarWarsAPIs.Controllers
         #region Public Methods
 
         /// <summary>
-        /// This method is used to retreive all star wars planets details
+        /// This method is used to retreive all star ships details
         /// </summary>
         /// <remarks></remarks>
         /// <response code="200">Success</response>
-        /// <response code="204">No content</response>
         /// <response code="400">Bad request</response>
         /// <response code="500">Internal server error</response>
         [HttpGet("GetAll")]
-        [ProducesResponseType(typeof(List<PlanetsViewResponseModel>), 200)]
+        [ProducesResponseType(typeof(List<StarshipViewResponseModel>), 200)]
         [ProducesResponseType(typeof(string), 400)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetAllPlanets()
+        public async Task<IActionResult> GetAllStarships()
         {
             try
             {
-                (HttpStatusCode, List<PlanetsModel>?) result = await _starWarsAPIService.GetAll(APIConstants.PlanetsApiPath);
+                (HttpStatusCode, List<StarshipModel>?) result = await _starWarsAPIService.GetAll(APIConstants.StarshipApiPath);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
-                    List<PlanetsViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();
+                    List<StarshipViewResponseModel> viewModels = result.Item2.Select(film => film.Map()).ToList();
+                    return Ok(viewModels);
                 }
                 return StatusCode((int)result.Item1);
             }
@@ -71,7 +70,7 @@ namespace StarWarsAPIs.Controllers
         }
 
         /// <summary>
-        ///This method is used to retreive the star wars planets details based on the given id
+        /// This method is used to retreive the star ships details based on the given id
         /// </summary>
         /// <remarks></remarks>
         /// <param name="id"></param>
@@ -80,17 +79,17 @@ namespace StarWarsAPIs.Controllers
         /// <response code="404">Not found</response>
         /// <response code="500">Internal server error</response>
         [HttpGet("GetById")]
-        [ProducesResponseType(typeof(PlanetsViewResponseModel), 200)]
+        [ProducesResponseType(typeof(StarshipViewResponseModel), 200)]
         [ProducesResponseType(typeof(string), 404)]
         [ProducesResponseType(typeof(string), 500)]
-        public async Task<IActionResult> GetPlanetById(int id)
+        public async Task<IActionResult> GetStarshipById(int id)
         {
             try
             {
-                (HttpStatusCode, PlanetsModel?) result = await _starWarsAPIService.GetById(APIConstants.PlanetsApiPath, id);
+                (HttpStatusCode, StarshipModel?) result = await _starWarsAPIService.GetById(APIConstants.StarshipApiPath, id);
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
-                    PlanetsViewResponseModel viewModel = result.Item2.Map();
+                    StarshipViewResponseModel viewModel = result.Item2.Map();
                     return Ok(viewModel);
                 }
                 return StatusCode((int)result.Item1);
@@ -113,16 +112,16 @@ namespace StarWarsAPIs.Controllers
         }
 
         /// <summary>
-        /// This method is used to retreive the star wars planets details based on the given list of ids
+        ///  This method is used to retreive the star ships details based on the given list of ids
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPost("GetByIds")]
-        public async Task<IActionResult> GetAllPlanetsByIds([FromBody] int[] ids)
+        public async Task<IActionResult> GetAllStarshipsByIds([FromBody] int[] ids)
         {
             try
             {
-                var response = await _starWarsAPIService.GetByIds(APIConstants.PlanetsApiPath, ids);
+                var response = await _starWarsAPIService.GetByIds(APIConstants.StarshipApiPath, ids);
 
                 return Ok(response);
             }

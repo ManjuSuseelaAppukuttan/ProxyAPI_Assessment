@@ -36,5 +36,9 @@ namespace StarWarsUI.Models
         [Required]
         [DisplayName("Planets")]
         public List<string>? Planets { get; set; }
+
+        [Required]
+        [DisplayName("Starships")]
+        public List<int>?  Starships { get; set; }
     }
 }

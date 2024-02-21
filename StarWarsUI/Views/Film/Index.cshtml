@@ -30,6 +30,9 @@
                 @Html.DisplayNameFor(model => model.Rlease_date)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Starships)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Planets)
             </th>
             <th></th>
@@ -59,6 +62,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Rlease_date)
+                </td>
+                <td>
+                    @Html.ActionLink("Starship", "Starships", "Starship", new { item.Starships })
                 </td>
                 <td>
                     @Html.ActionLink("Planet", "Planet", "Planets", new { item.Planets })

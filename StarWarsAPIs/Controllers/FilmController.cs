@@ -35,8 +35,7 @@ namespace StarWarsAPIs.Controllers
         /// </summary>
         /// <remarks></remarks>
         /// <response code="200">Success</response>
-        /// <response code="204">No contect</response>
-        /// <response code="400">Bad request</response>
+        /// <response code="204">No content</response>
         /// <response code="500">Internal server error</response>
         [HttpGet("GetAll")]
         [ProducesResponseType(typeof(List<FilmViewResponseModel>), 200)]

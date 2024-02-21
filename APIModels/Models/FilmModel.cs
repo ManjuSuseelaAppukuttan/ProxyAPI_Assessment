@@ -17,5 +17,8 @@ namespace APIModels.Models
         [JsonProperty("planets")]
         public List<string>? Planets { get; set; }
 
+        [JsonProperty("starships")]
+        public List<string> Starships { get; set; }
+
     }
 }

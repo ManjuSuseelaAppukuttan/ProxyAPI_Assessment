@@ -25,6 +25,12 @@ namespace APICommons
                 {
                     string? modifiedUrl = url?.Replace(APIConstants.PlanetsUrl, "").TrimEnd('/');
                     return int.TryParse(modifiedUrl, out int itemId) ? itemId : 0;
+                }).ToArray(),
+
+                Starships = film.Starships.Select(url =>
+                {
+                    string? modifiedUrl = url?.Replace(APIConstants.StarshipUrl, "").TrimEnd('/');
+                    return int.TryParse(modifiedUrl, out int itemId) ? itemId : 0;
                 }).ToArray()
             };
         }
@@ -45,6 +51,28 @@ namespace APICommons
                 Films = planets.Films?.Select(url =>
                 {
                     string modifiedUrl = url?.Replace(APIConstants.FilmApiPath, "").TrimEnd('/');
+                    return modifiedUrl;
+                }).ToList(),
+            };
+        }
+
+        /// <summary>
+        /// Extension method to convert StarshipModel to StarShipViewModel
+        /// </summary>
+        /// <param name="starship">StarshipModel</param>
+        /// <returns>StarShipViewModel</returns>
+        public static StarshipViewResponseModel Map(this StarshipModel starship)
+        {
+            return new StarshipViewResponseModel
+            {
+                Id = Convert.ToInt16(starship.Url?.Replace(APIConstants.StarshipUrl, "").TrimEnd('/')),
+                Name = starship.Name,
+                Model = starship.Model,
+                Manufacturer = starship.Manufacturer,
+                Consumables = starship.Consumables,
+                Films = starship.Films.Select(url =>
+                {
+                    string modifiedUrl = url?.Replace(APIConstants.StarshipApiPath, "").TrimEnd('/');
                     return modifiedUrl;
                 }).ToList(),
             };
