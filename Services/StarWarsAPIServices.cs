@@ -28,6 +28,12 @@ namespace APIServices
 
         #region Public Methods
 
+        /// <summary>
+        /// This method is uesd to retrieve all data from the specified uri with given ids
+        /// </summary>
+        /// <param name="apiName"></param>
+        /// <param name="ids"></param>
+        /// <returns></returns>
         public async Task<List<T>> GetByIds(string apiName, int[] ids)
         {
             var bag = new ConcurrentBag<T>();
@@ -45,6 +51,11 @@ namespace APIServices
             return bag.ToList<T>();
         }
 
+        /// <summary>
+        ///  This method is uesd to retrieve all data from the specified uri
+        /// </summary>
+        /// <param name="apiName"></param>
+        /// <returns></returns>
         public async Task<(HttpStatusCode, List<T>?)> GetAll(string apiName)
         {
             (HttpStatusCode, string) reponse = await GetHttpResponse(apiName);
@@ -57,6 +68,12 @@ namespace APIServices
             return (reponse.Item1, null);
         }
 
+        /// <summary>
+        ///  This method is uesd to retrieve the data from the specified uri with given id
+        /// </summary>
+        /// <param name="apiName"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<(HttpStatusCode, T?)> GetById(string apiName, int id)
         {
             var reponse = await GetHttpResponse($"{apiName}/{id}");

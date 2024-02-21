@@ -31,7 +31,7 @@ namespace StarWarsAPIs.Controllers
         #region Public Methods
 
         /// <summary>
-        /// This method is used to retreive all star wars films details
+        /// This method is used to retrieve all star wars films details
         /// </summary>
         /// <remarks></remarks>
         /// <response code="200">Success</response>
@@ -71,7 +71,7 @@ namespace StarWarsAPIs.Controllers
         }
 
         /// <summary>
-        /// This method is used to retreive the star wars films details based on the given id
+        /// This method is used to retrieve the star wars films details based on the given id
         /// </summary>
         /// <remarks></remarks>
         /// <param name="id"></param>
@@ -113,7 +113,7 @@ namespace StarWarsAPIs.Controllers
         }
 
         /// <summary>
-        ///  This method is used to retreive the star wars planets details based on the given list of ids
+        ///  This method is used to retrieve the star wars planets details based on the given list of ids
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>

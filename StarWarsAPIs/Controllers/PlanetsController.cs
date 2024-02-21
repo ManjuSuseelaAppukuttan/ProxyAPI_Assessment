@@ -31,7 +31,7 @@ namespace StarWarsAPIs.Controllers
         #region Public Methods
 
         /// <summary>
-        /// This method is used to retreive all star wars planets details
+        /// This method is used to retrieve all star wars planets details
         /// </summary>
         /// <remarks></remarks>
         /// <response code="200">Success</response>
@@ -50,6 +50,7 @@ namespace StarWarsAPIs.Controllers
                 if (result.Item1 == HttpStatusCode.OK && result.Item2 != null)
                 {
                     List<PlanetsViewResponseModel> viewModels = result.Item2.Select(item => item.Map()).ToList();
+                    return Ok(viewModels);
                 }
                 return StatusCode((int)result.Item1);
             }
@@ -71,7 +72,7 @@ namespace StarWarsAPIs.Controllers
         }
 
         /// <summary>
-        ///This method is used to retreive the star wars planets details based on the given id
+        ///This method is used to retrieve the star wars planets details based on the given id
         /// </summary>
         /// <remarks></remarks>
         /// <param name="id"></param>
@@ -113,7 +114,7 @@ namespace StarWarsAPIs.Controllers
         }
 
         /// <summary>
-        /// This method is used to retreive the star wars planets details based on the given list of ids
+        /// This method is used to retrieve the star wars planets details based on the given list of ids
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>

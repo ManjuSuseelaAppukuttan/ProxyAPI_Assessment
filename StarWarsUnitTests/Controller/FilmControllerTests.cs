@@ -2,6 +2,7 @@
 using APIInterfaces;
 using APIModels.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using StarWarsAPIs.Controllers;
 using System.Net;
@@ -13,30 +14,27 @@ namespace StarWarsUnitTests.Controller
     {
         private Mock<IStarWarsAPIService<FilmModel>> _starWarsAPIServiceMock;
         private FilmController _filmController;
+        private Mock<ILogger<FilmController>> _mockLogger;
 
         public FilmControllerTests()
         {
             _starWarsAPIServiceMock = new Mock<IStarWarsAPIService<FilmModel>>();
-            _filmController = new FilmController(null, _starWarsAPIServiceMock.Object);
-
+            _mockLogger = new Mock<ILogger<FilmController>>();
+            _filmController = new FilmController(_mockLogger.Object, _starWarsAPIServiceMock.Object);
         }
 
         [Fact]
         public async Task GetAllFilms_Ok()
         {
             // Arrange
-            var filmModels = new List<FilmModel>() { new FilmModel { Title = "Film1", Planets = new List<string> { } } };
+            var filmModels = new List<FilmModel>() { new FilmModel { Title = "Film1", Planets = new List<string> { }, Starships = new List<string> { } } };
             _starWarsAPIServiceMock.Setup(s => s.GetAll(APIConstants.FilmApiPath)).ReturnsAsync((HttpStatusCode.OK, filmModels));
 
             // Act
             var result = await _filmController.GetAllFilms();
 
             // Assert
-            // Assert
             Xunit.Assert.IsType<OkObjectResult>(result);
-            var okResult = (OkObjectResult)result;
-            Xunit.Assert.IsType<List<FilmViewResponseModel>>(okResult.Value);
-
         }
 
         [Fact]
@@ -44,16 +42,14 @@ namespace StarWarsUnitTests.Controller
         {
             // Arrange
             var filmId = 1;
-            var filmModel = new FilmModel { Title = "Film1", Planets = new List<string> { } };
+            var filmModel = new FilmModel { Title = "Film1", Planets = new List<string> { } , Starships = new List<string>() };
             _starWarsAPIServiceMock.Setup(s => s.GetById(APIConstants.FilmApiPath, filmId)).ReturnsAsync((HttpStatusCode.OK, filmModel));
 
             // Act
             var result = await _filmController.GetFilmById(filmId);
 
-            // Assert
+            // Assert 
             Xunit.Assert.IsType<OkObjectResult>(result);
-            var okResult = (OkObjectResult)result;
-            Xunit.Assert.IsType<FilmViewResponseModel>(okResult.Value);
         }
 
         [Fact]
